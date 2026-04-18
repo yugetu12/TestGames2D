@@ -5,10 +5,11 @@ public class ShootingPlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;              //移動速度
     [SerializeField] private float bulletSpeed = 10f;           //弾の速度
+    [SerializeField] private int attackPower = 10;              //プレイヤー攻撃力
     [SerializeField] private InputActionReference moveAction;   //移動入力アクション
     [SerializeField] private InputActionReference attackAction; //攻撃入力アクション
     [SerializeField] private Transform firePoint;               //弾を発射する位置
-    [SerializeField] private TestBullet bulletPrefab;           //発射する弾のプレハブ
+    [SerializeField] private ShootingTestBullet bulletPrefab;   //発射する弾のプレハブ
     private Vector2 moveInput;
 
     void OnEnable()
@@ -52,6 +53,6 @@ public class ShootingPlayerController : MonoBehaviour
 
         //弾を生成して発射
         var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.FireBullet(firePoint.up, bulletSpeed);
+        bullet.FireBullet(firePoint.up, bulletSpeed, attackPower);
     }
 }
