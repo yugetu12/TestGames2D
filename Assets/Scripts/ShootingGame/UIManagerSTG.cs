@@ -1,16 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManagerSTG : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private HealthManagerSTG playerHealth;
+    [SerializeField] private Slider healthSlider;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (playerHealth == null || healthSlider == null) return;
+
+        //スライダーを更新
+        healthSlider.value = playerHealth.health / (float)playerHealth.maxHealth;
     }
 }

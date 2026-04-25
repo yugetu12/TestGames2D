@@ -8,6 +8,14 @@ public class PlayerManagerSTG : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;   //移動入力アクション
     private Vector2 moveInput;
 
+    [Header("攻撃設定")]
+    [SerializeField] private float bulletSpeed = 10f;           //弾の速度
+    [SerializeField] private int attackPower = 10;              //攻撃力
+    [SerializeField] private float attackCooldown = 0.25f;      //攻撃間隔 
+    [SerializeField] private Vector2 firePointOffset;
+    [SerializeField] private BulletManagerSTG bulletPrefab;
+    private float attackTimer;
+
      void OnEnable()
     {
         //入力アクションを有効化
@@ -22,10 +30,22 @@ public class PlayerManagerSTG : MonoBehaviour
 
     void Update()
     {
-        if (moveAction == null) return;
+        if (moveAction == null || bulletPrefab == null) return;
 
         //移動入力を取得して正規化
         moveInput = moveAction.action.ReadValue<Vector2>().normalized;
+
+        //一定間隔で自動攻撃
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackCooldown)
+        {
+            attackTimer = 0f;
+
+            //弾を生成して発射
+            var bullet = Instantiate(bulletPrefab, transform.position + (Vector3)firePointOffset, transform.rotation);
+            bullet?.FireBullet(transform.up, bulletSpeed, attackPower);
+            
+        }
     }
 
     void FixedUpdate()
