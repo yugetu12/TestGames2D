@@ -19,7 +19,14 @@ public class EnemyManagerSTG : MonoBehaviour
     void Start()
     {
         //初期の移動方向を設定
-        moveDirectionX = startToRight ? 1f : -1f;
+        if (startToRight)
+        {
+            moveDirectionX = 1f;
+        }
+        else
+        {
+            moveDirectionX = -1f;
+        }
     }
 
     void Update()
