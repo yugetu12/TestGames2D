@@ -8,7 +8,10 @@ public class UIManagerSTG : MonoBehaviour
 
     void Update()
     {
-        if (playerHealth == null || healthSlider == null) return;
+        if (playerHealth == null || healthSlider == null) {
+            healthSlider.value = 0;
+            return;
+        }
 
         //スライダーを更新
         healthSlider.value = playerHealth.health / (float)playerHealth.maxHealth;
