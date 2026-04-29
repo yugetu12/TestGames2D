@@ -11,6 +11,8 @@ public class PlayerManagerSACT : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     private Rigidbody2D rb;
+    private Vector2 moveInput = Vector2.zero;
+    private bool jumpQueued = false;
 
     void Awake()
     {
@@ -23,34 +25,59 @@ public class PlayerManagerSACT : MonoBehaviour
         //入力アクションを有効化
         moveAction.action.Enable();
         jumpAction.action.Enable();
-        //コールバックを登録
-        jumpAction.action.performed += OnJump;
     }
 
     void OnDisable()
     {
-        //コールバックを解除
-        jumpAction.action.performed -= OnJump;
         //入力アクションを無効化
         moveAction.action.Disable();
         jumpAction.action.Disable();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        //移動入力を取得してプレイヤーを移動
-        InputAction moveInput = moveAction.action;
-        Vector2 move = moveInput.ReadValue<Vector2>();
-        rb.linearVelocity = new Vector2(move.x * moveSpeed, rb.linearVelocity.y);
+        if (!GameManagerSACT.Instance.isPlaying) return;
+
+        //入力を読む
+        moveInput = moveAction.action.ReadValue<Vector2>();
+        if (jumpAction.action.WasPressedThisFrame())
+        {
+            jumpQueued = true;
+        }
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    void FixedUpdate()
     {
-        if (!IsGrounded()) return;
+        //移動を適用
+        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
-        //速度をリセットして上向きに力を加える
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        //ジャンプを適用
+        if (jumpQueued && IsGrounded())
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpQueued = false;
+        }
+        else if (jumpQueued)
+        {
+            //空中にいるときはフラグを下ろす
+            jumpQueued = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Dead"))
+        {
+            //死んだときはゲームオーバーにする
+            GameManagerSACT.Instance.GameOver();
+        }
+
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            //ゴールに触れたときはゲームクリアにする
+            GameManagerSACT.Instance.GameClear();
+        }
     }
 
     private bool IsGrounded()
