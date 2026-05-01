@@ -30,21 +30,21 @@ public class PlayerManagerSTG : MonoBehaviour
 
     void Update()
     {
-        if (moveAction == null || bulletPrefab == null) return;
+        if (moveAction == null || bulletPrefab == null || !GameManager.Instance.isPlaying) return;
 
         //移動入力を取得して正規化
         moveInput = moveAction.action.ReadValue<Vector2>().normalized;
 
         //一定間隔で自動攻撃
         attackTimer += Time.deltaTime;
-        if (attackTimer >= attackCooldown)
+        //スコアに応じて攻撃間隔を短くする
+        if (attackTimer >= attackCooldown * (1f - GameManager.Instance.score * 0.01f))
         {
             attackTimer = 0f;
 
             //弾を生成して発射
             var bullet = Instantiate(bulletPrefab, transform.position + (Vector3)firePointOffset, transform.rotation);
             bullet?.FireBullet(transform.up, bulletSpeed, attackPower);
-            
         }
     }
 
