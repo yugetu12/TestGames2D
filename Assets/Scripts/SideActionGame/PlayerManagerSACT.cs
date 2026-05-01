@@ -71,6 +71,7 @@ public class PlayerManagerSACT : MonoBehaviour
         {
             //死んだときはゲームオーバーにする
             GameManagerSACT.Instance.GameOver();
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.CompareTag("Goal"))
