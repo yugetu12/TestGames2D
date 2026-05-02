@@ -16,6 +16,9 @@ public class PlayerManagerSTG : MonoBehaviour
     [SerializeField] private BulletManagerSTG bulletPrefab;
     private float attackTimer;
 
+    [Header("SE設定")]
+    [SerializeField] private AudioClip shootSE;
+
      void OnEnable()
     {
         //入力アクションを有効化
@@ -30,21 +33,24 @@ public class PlayerManagerSTG : MonoBehaviour
 
     void Update()
     {
-        if (moveAction == null || bulletPrefab == null) return;
+        if (moveAction == null || bulletPrefab == null || !GameManagerSTG.Instance.isPlaying) return;
 
         //移動入力を取得して正規化
         moveInput = moveAction.action.ReadValue<Vector2>().normalized;
 
         //一定間隔で自動攻撃
         attackTimer += Time.deltaTime;
-        if (attackTimer >= attackCooldown)
+        //スコアに応じて攻撃間隔を短くする
+        if (attackTimer >= attackCooldown * (1f - GameManagerSTG.Instance.score * 0.01f))
         {
             attackTimer = 0f;
+
+            //SEを再生する
+            SoundManager.Instance.PlaySE(shootSE);
 
             //弾を生成して発射
             var bullet = Instantiate(bulletPrefab, transform.position + (Vector3)firePointOffset, transform.rotation);
             bullet?.FireBullet(transform.up, bulletSpeed, attackPower);
-            
         }
     }
 
