@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManagerSTG : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float spawnInterval = 10f;
@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.isPlaying) return;
+        if (!GameManagerSTG.Instance.isPlaying) return;
 
         timer -= Time.deltaTime;
         if (timer <= 0f)

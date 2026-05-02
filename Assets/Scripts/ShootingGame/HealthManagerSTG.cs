@@ -22,14 +22,14 @@ public class HealthManagerSTG : MonoBehaviour
             //スコアを加算する
             if (isEnemy)
             {
-                GameManager.Instance.AddScore();
+                GameManagerSTG.Instance.AddScore();
             }
 
             //死亡処理
             health = 0;
             if (!isEnemy)
             {
-                GameManager.Instance.GameOver();
+                GameManagerSTG.Instance.GameOver();
             }
             Destroy(gameObject);
         }

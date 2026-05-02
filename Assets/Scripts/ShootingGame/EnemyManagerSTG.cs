@@ -31,7 +31,7 @@ public class EnemyManagerSTG : MonoBehaviour
 
     void Update()
     {
-        if (bulletPrefab == null || !GameManager.Instance.isPlaying) return;
+        if (bulletPrefab == null || !GameManagerSTG.Instance.isPlaying) return;
 
         //攻撃間隔を管理
         var safeAttackInterval = Mathf.Max(0.01f, attackInterval);
@@ -47,7 +47,7 @@ public class EnemyManagerSTG : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GameManager.Instance.isPlaying) return;
+        if (!GameManagerSTG.Instance.isPlaying) return;
         
         //Rigidbody2DでX方向にのみ移動する
         rb.linearVelocity = new Vector2(moveDirectionX * moveSpeed, 0f);

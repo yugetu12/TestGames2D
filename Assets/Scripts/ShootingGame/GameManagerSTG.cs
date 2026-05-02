@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManagerSTG : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManagerSTG Instance { get; private set; }
     public bool isPlaying = true;
-    [SerializeField] private SpawnManager spawnMng;
+    [SerializeField] private SpawnManagerSTG spawnMng;
     [SerializeField] private int scoreToClear = 50;
     [HideInInspector] public int score = 0;
 
