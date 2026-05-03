@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class EnemyManagerSACT : MonoBehaviour
 {
+    [Header("移動設定")]
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float moveRange = 2f;
+
+    [Header("ジャンプ設定")]
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpInterval = 2f;
+    private float jumpTimer = 0f;
 
     private Rigidbody2D rb;
     private int direction = 1;
@@ -28,6 +34,17 @@ public class EnemyManagerSACT : MonoBehaviour
         else if (originPos.x + moveRange < transform.position.x)
         {
             direction = -1;
+        }
+
+        //一定時間でジャンプする
+        if (jumpTimer <= 0f)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpTimer = jumpInterval;
+        }
+        else
+        {
+            jumpTimer -= Time.fixedDeltaTime;
         }
 
         //移動
