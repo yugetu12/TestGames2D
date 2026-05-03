@@ -4,6 +4,7 @@ public class GameManagerSACT : MonoBehaviour
 {
     public static GameManagerSACT Instance { get; private set; }
     public bool isPlaying;
+    [HideInInspector] public int score;
 
     void Awake()
     {
@@ -17,6 +18,12 @@ public class GameManagerSACT : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void AddScore(int points)
+    {
+        score += points;
+        Debug.Log("スコア: " + score);
     }
 
     public void GameOver()
