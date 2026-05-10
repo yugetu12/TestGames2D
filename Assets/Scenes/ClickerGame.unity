@@ -444,9 +444,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d4bebf98c4dff469a2b1c908840b69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManagerCLK
-  maxHealth: 100
-  enemyData: {fileID: 11400000, guid: 54490ebf52d65d043907bd9025fd829f, type: 2}
-  enemyNameText: {fileID: 643268064}
+  enemyData:
+    enemyName: "\u30B9\u30E9\u30A4\u30E0"
+    maxHealth: 100
+    enemySprite: {fileID: -8733399815384327572, guid: 24c7257f28691b64a9ac895f74b1d318, type: 3}
+  nameText: {fileID: 643268064}
   healthText: {fileID: 1862247105}
   enemyImage: {fileID: 536809468}
 --- !u!1 &643268062
