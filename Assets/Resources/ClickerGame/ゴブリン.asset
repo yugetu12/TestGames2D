@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00108f26f289453409a2c681af359567, type: 3}
+  m_Name: "\u30B4\u30D6\u30EA\u30F3"
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDataCLK
+  enemyName: "\u30B4\u30D6\u30EA\u30F3"
+  maxHealth: 7
+  enemySprite: {fileID: 7576803271708955751, guid: a4bd6224190ec314fbedafd626ddfd08, type: 3}
